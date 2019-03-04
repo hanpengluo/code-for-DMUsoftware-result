@@ -52,3 +52,6 @@ $MODEL
 1 6
 1 6
 0 
+#----------------------------------------------------------------
+DMU_h2_DRP-function.txt：is the function for calculate
+DMU_h2_DRP.R：is the running code in R
