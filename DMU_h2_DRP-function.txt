@@ -144,15 +144,17 @@ dmu_DRP<-function(dmu_parout,dmu_result,ped){
     tem_c<-as.data.frame(t(c(0,0,0)))
     names(tem_c)<-names(dmu_result_b)
     dmu_result_d<-rbind(dmu_result_b,tem_c)
-    dmu_result_a<-merge(dmu_result_a,dmu_result_d,by.x = "sire",by.y = "id")
-    dmu_result_a<-merge(dmu_result_a,dmu_result_d,by.x = "dam",by.y = "id")
+    dmu_result_a<-merge(dmu_result_a,dmu_result_d,by.x = "sire",by.y = "id",all.x=T)
+    dmu_result_a<-merge(dmu_result_a,dmu_result_d,by.x = "dam",by.y = "id",all.x=T)
     names(dmu_result_a)[c(5,9,11:14)]<-c("i_EBV","i_reli","sire_EBV","sire_reli","dam_EBV","dam_reli")
+    dmu_result_a[is.na(dmu_result_a)]=0
     dmu_result_a$pa_ebv<-(dmu_result_a$sire_EBV+dmu_result_a$dam_EBV)/2
     dmu_result_a$pa_reli<-(dmu_result_a$sire_reli+dmu_result_a$dam_reli)/2
     dmu_result_a$ERC_pa<-((1-dmu_result_a$h2)/dmu_result_a$h2)*dmu_result_a$pa_reli/(1-dmu_result_a$pa_reli)
     dmu_result_a$ERC_ind_pa<-(((1-dmu_result_a$h2)/dmu_result_a$h2)*dmu_result_a$i_reli/(1-dmu_result_a$i_reli))-dmu_result_a$ERC_pa
     dmu_result_a$DRP<-(dmu_result_a$pa_ebv)+((dmu_result_a$i_EBV-dmu_result_a$pa_ebv)/(dmu_result_a$ERC_ind_pa/(dmu_result_a$ERC_ind_pa+dmu_result_a$ERC_pa+1)))
     resul_DRP=dmu_result_a[,c(4,3,2,1,10,5:9,19)]
+    #resul_DRP[resul_DRP==0]=NA
     hist(resul_DRP[which(resul_DRP$trait==i),which(names(resul_DRP)=="i_EBV")],xlab = paste("trait_",i,"EBV"),main = "")
     hist(resul_DRP[which(resul_DRP$trait==i),which(names(resul_DRP)=="i_reli")],xlab = paste("trait_",i,"reliability"),main = "")
     hist(resul_DRP[which(resul_DRP$trait==i),which(names(resul_DRP)=="DRP")],xlab = paste("trait_",i,"DRP"),main = "")
