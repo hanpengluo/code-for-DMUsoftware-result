@@ -149,7 +149,7 @@ dmu_DRP<-function(dmu_parout,dmu_result,ped){
     names(dmu_result_a)[c(5,9,11:14)]<-c("i_EBV","i_reli","sire_EBV","sire_reli","dam_EBV","dam_reli")
     dmu_result_a[is.na(dmu_result_a)]=0
     dmu_result_a$pa_ebv<-(dmu_result_a$sire_EBV+dmu_result_a$dam_EBV)/2
-    dmu_result_a$pa_reli<-(dmu_result_a$sire_reli+dmu_result_a$dam_reli)/2
+    dmu_result_a$pa_reli<-(dmu_result_a$sire_reli+dmu_result_a$dam_reli)/4
     dmu_result_a$ERC_pa<-((1-dmu_result_a$h2)/dmu_result_a$h2)*dmu_result_a$pa_reli/(1-dmu_result_a$pa_reli)
     dmu_result_a$ERC_ind_pa<-(((1-dmu_result_a$h2)/dmu_result_a$h2)*dmu_result_a$i_reli/(1-dmu_result_a$i_reli))-dmu_result_a$ERC_pa
     dmu_result_a$DRP<-(dmu_result_a$pa_ebv)+((dmu_result_a$i_EBV-dmu_result_a$pa_ebv)/(dmu_result_a$ERC_ind_pa/(dmu_result_a$ERC_ind_pa+dmu_result_a$ERC_pa+1)))
